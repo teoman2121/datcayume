@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <!-- Mobil için hayati meta etiketi: Kullanıcının zoom yapmasını engeller, app hissiyatı verir -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DATÇA YÜZME | Mobile Executive Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,700;0,900;1,900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* GTA VI & Vice City Mobile Premium Renk Paleti */
+        :root {
+            --gta-pink: #ff007f;
+            --gta-cyan: #00f3ff;
+            --gta-orange: #ff5e00;
+            --bg-dark: #05050a;
+            --bg-card: #0d0d18;
+            --text-light: #ffffff;
+            --text-muted: #94a3b8;
+            --font-gta: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* Mobilde dokunma vurgusunu kaldırır */
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-gta);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            /* Alt sabit buton için boşluk bırakıyoruz */
+            padding-bottom: 80px; 
+        }
+
+        /* Tüm siteyi telefon ekranına zorluyoruz (PC'de açılsa bile mobil görünür) */
+        .mobile-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+            background-color: var(--bg-dark);
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        /* 1 Haziran Uyarı Bandı (Mobile Optimize) */
+        .season-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #ff007f, #ff5e00, #ff007f);
+            background-size: 200% 200%;
+            color: #fff;
+            text-align: center;
+            padding: 8px 10px;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 1001;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Mobil Navigasyon */
+        nav {
+            position: fixed;
+            top: 26px; /* Alert yüksekliği */
+            width: 100%;
+            max-width: 480px;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center; /* Sadece logo ortada */
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(5,5,10,0.95), transparent);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-style: italic;
+            background: linear-gradient(45deg, var(--gta-pink), var(--gta-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+            text-decoration: none;
+        }
+
+        /* Hero Bölümü (Telefon Ekranına Tam Oturan 100vh) */
+        .hero {
+            position: relative;
+            height: 100vh;
+            /* iOS Safari için dinamik viewport düzeltmesi */
+            height: 100dvh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(5, 5, 10, 0.5), var(--bg-dark)), 
+                        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+            filter: saturate(1.5) hue-rotate(-10deg) brightness(0.8);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 20px;
+            margin-top: 40px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            line-height: 0.9;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 0px var(--gta-pink), -1px -1px 0px var(--gta-cyan);
+            animation: glitchMobile 1.5s infinite alternate;
+        }
+
+        .hero p {
+            font-size: 15px;
+            font-weight: 400;
+            color: #f1f5f9;
+            margin: 0 auto 30px auto;
+            line-height: 1.5;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+        }
+
+        /* Genel Bölüm Ayarları (Mobil İçin Daraltılmış Padding) */
+        section {
+            position: relative;
+            padding: 80px 20px;
+            overflow: hidden;
+        }
+
+        /* Mobil 3D Öne Gelme (Zoom) Alanı */
+        .scroll-zoom-container {
+            position: relative;
+            width: 100%;
+            height: 300px; /* Mobilde çok yer kaplamaması için kısaltıldı */
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 30px 0;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,0,127,0.2);
+        }
+
+        .zoom-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(0.85);
+            opacity: 0.5;
+            filter: saturate(1.4) brightness(0.7);
+            transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1), opacity 0.3s ease;
+            will-change: transform, opacity;
+        }
+
+        .zoom-img.in-view {
+            opacity: 1;
+        }
+
+        /* Tipografi (H2 & H3) */
+        .section-header h2, .manifesto-text h2 {
+            font-size: 36px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .manifesto-text h2 {
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header h2 {
+            background: linear-gradient(135deg, var(--gta-pink), var(--gta-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Program Kartları (Mobilde Alt Alta) */
+        .program-block {
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 30px;
+        }
+
+        .program-info h3 {
+            font-size: 26px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: var(--gta-cyan);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .meta-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(255, 0, 127, 0.1);
+            border: 1px solid var(--gta-pink);
+            color: var(--gta-pink);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border-radius: 3px;
+        }
+
+        /* Operasyonel Protokol (Fiyatlandırma) - Mobil Uyumlu */
+        .protocol-section {
+            background: linear-gradient(180deg, #020205, #0a0a14);
+            border-top: 1px solid rgba(0, 243, 255, 0.1);
+        }
+
+        .protocol-card {
+            background: rgba(13, 13, 24, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+            border-left: 3px solid var(--gta-cyan);
+        }
+
+        .protocol-card:nth-child(even) {
+            border-left-color: var(--gta-pink);
+        }
+
+        .protocol-card h4 {
+            font-size: 20px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .protocol-card ul {
+            list-style: none;
+        }
+
+        .protocol-card ul li {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .protocol-card ul li::before {
+            content: '►';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--gta-pink);
+            font-size: 9px;
+        }
+
+        .price-highlight {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--gta-cyan);
+            display: block;
+            margin: 10px 0 5px 0;
+            font-style: italic;
+        }
+
+        /* Neden Biz? Mobil Kartlar */
+        .why-card {
+            background: var(--bg-card);
+            padding: 30px 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--gta-pink);
+            margin-bottom: 25px;
+        }
+
+        .why-card .count {
+            font-size: 36px;
+            font-weight: 900;
+            font-style: italic;
+            color: rgba(255,255,255,0.05);
+            line-height: 1;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .why-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        /* Sabit Mobil Alt Buton (Sticky Bottom CTA) - Tam App Deneyimi */
+        .mobile-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5,5,10,0.95);
+            backdrop-filter: blur(15px);
+            padding: 15px 20px;
+            z-index: 9999;
+            border-top: 1px solid rgba(255, 0, 127, 0.3);
+            display: flex;
+            justify-content: center;
+        }
+
+        .mobile-bottom-bar .mobile-btn {
+            width: 100%;
+            max-width: 440px;
+            padding: 16px 0;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            color: #fff;
+            background: linear-gradient(90deg, var(--gta-pink), var(--gta-orange));
+            border-radius: 6px;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(255, 0, 127, 0.5);
+            animation: pulseBtn 2s infinite;
+        }
+
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(255, 94, 0, 0.8); }
+            100% { box-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
+        }
+
+        @keyframes glitchMobile {
+            0% { text-shadow: 2px 2px 0px var(--gta-pink), -1px -1px 0px var(--gta-cyan); }
+            100% { text-shadow: -2px -2px 0px var(--gta-pink), 1px 1px 0px var(--gta-cyan); }
+        }
+
+        footer {
+            padding: 40px 20px 60px 20px; /* Alttaki bar için ekstra boşluk */
+            background: #020205;
+            text-align: center;
+            font-size: 11px;
+            color: rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Her şey mobil konteyner içinde -->
+    <div class="mobile-container">
+
+        <!-- 1 Haziran Başlangıç Uyarı Bandı -->
+        <div class="season-alert">
+            🔺 PROTOKOL AKTİF: 1 HAZİRAN SEZONU BAŞLADI 🔺
+        </div>
+
+        <!-- Mobil Navigasyon (Sadece Logo) -->
+        <nav>
+            <a href="#" class="nav-logo">DATÇA YÜZME</a>
+        </nav>
+
+        <!-- Hero Giriş Bölümü -->
+        <section class="hero">
+            <div class="hero-bg" id="heroBg"></div>
+            <div class="hero-content">
+                <h1>SUYU YENİDEN TANIMLA.</h1>
+                <p>Datça'nın hırçın ve asil sularında, lüksü uç sınırlarda harmanlayan executive yüzme deneyimi.</p>
+            </div>
+        </section>
+
+        <!-- Manifesto Bölümü -->
+        <section id="manifesto">
+            <div class="manifesto-text">
+                <h2>KUSURSUZLUĞUN <br><span style="color: var(--gta-pink);">ASİL TONU.</span></h2>
+                <p>Bizim dünyamızda yüzmek sadece suyun yüzeyinde kalma mücadelesi değildir; okyanusun derin ritmine ilan ettiğiniz mutlak bir hakimiyettir.</p>
+                <p>Burada her kulaç, adınıza özel yazılmış bir performans senfonisidir. Estetiği, gücü ve elitizmi bir araya getirerek size suyun üzerinde yeni bir krallık vaat ediyoruz.</p>
+            </div>
+            <!-- Mobil 3D Zoom Resmi -->
+            <div class="scroll-zoom-container">
+                <img class="zoom-img" src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=600&q=80" alt="Premium Coast">
+            </div>
+        </section>
+
+        <!-- Programlar Bölümü -->
+        <section id="programs" style="background-color: #080812;">
+            <div class="section-header">
+                <h2>ELITE MODULES</h2>
+                <p style="text-align:center; font-size:12px;">Sınırları Reddedenler İçin</p>
+            </div>
+
+            <!-- Program 1 -->
+            <div class="program-block">
+                <div class="program-info">
+                    <span class="meta-tag">PRIVATE EXECUTIVE</span>
+                    <h3>Birebir Yetişkin Dersleri</h3>
+                    <p>Zamanı en değerli varlığı olan liderler için tasarlandı. Biyomekanik haritanıza göre inşa edilen lüks bir mentorluk süreci.</p>
+                </div>
+                <div class="scroll-zoom-container">
+                    <img class="zoom-img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" alt="Luxury Pool">
+                </div>
+            </div>
+
+            <!-- Program 2 -->
+            <div class="program-block">
+                <div class="program-info">
+                    <span class="meta-tag">HIGH PROTECTION</span>
+                    <h3>Çocuklar İçin Profesyonel Gelişim</h3>
+                    <p>Uluslararası standartlarda can güvenliği ve pedagojik yaklaşımla, geleceğin vizyonerlerini suyun dünyasıyla tanıştırıyoruz.</p>
+                </div>
+                <div class="scroll-zoom-container">
+                    <img class="zoom-img" src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80" alt="Ocean Swimmer">
+                </div>
+            </div>
+        </section>
+
+        <!-- Operasyonel Protokol (Fiyat Listesi) -->
+        <section id="protocol" class="protocol-section">
+            <div class="section-header">
+                <h2>PROTOKOL & YATIRIM</h2>
+                <p style="text-align:center;">Kurallar net. Kontenjan sınırlı.</p>
+            </div>
+
+            <!-- Kart 1 -->
+            <div class="protocol-card">
+                <h4>Harekat Alanları</h4>
+                <ul>
+                    <li><strong>Burgaz Yarı Olimpik Havuz:</strong> 25 metrelik izole teknik gelişim alanı.</li>
+                    <li><strong>Açık Su:</strong> Taşlık Plajı'nda deniz dinamiklerine karşı mücadele.</li>
+                    <li><strong>Hibrit Eğitim:</strong> Hem havuz hem deniz çapraz rotaları.</li>
+                </ul>
+            </div>
+
+            <!-- Kart 2 -->
+            <div class="protocol-card">
+                <h4>Antrenman Döngüsü</h4>
+                <ul>
+                    <li><strong>Masterclass:</strong> Haftada 3 gün formatında, asgari 3 hafta (Toplam 10 ders) yoğunlaştırılmış program.</li>
+                    <li><strong>Kabul Kriteri:</strong> Asgari yaş sınırımız 5 yaş olarak belirlenmiştir.</li>
+                </ul>
+            </div>
+
+            <!-- Kart 3 -->
+            <div class="protocol-card" style="border-left-color: var(--gta-orange);">
+                <h4>Zaman & Yatırım</h4>
+                <ul>
+                    <li>Her özel seans kesintisiz <strong>1 saat</strong> sürer.</li>
+                    <li>
+                        Tekil Operasyon:
+                        <span class="price-highlight">2.000 ₺ <span style="font-size:12px; font-style:normal; color:var(--text-muted);">/ seans</span></span>
+                    </li>
+                    <li style="margin-top: 15px;">
+                        10 Seanslık Executive Paket:
+                        <span class="price-highlight" style="color: var(--gta-pink);">18.000 ₺</span>
+                        <em style="font-size:11px; color:var(--text-muted);">(Seans başı ayrıcalıklı fiyat: 1.800 ₺)</em>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Neden Biz? -->
+        <section id="why" style="background: linear-gradient(to bottom, var(--bg-dark), #0f0f1e);">
+            <div class="section-header">
+                <h2>FARKIMIZ</h2>
+            </div>
+            
+            <div class="why-card">
+                <div class="count">01</div>
+                <h4>Kişiselleştirilmiş Lüks</h4>
+                <p>Önceden basılmış basmakalıp planları çöpe atın. Sizinle yapılan ilk görüşmeden itibaren her şey sıfırdan tasarlanır.</p>
+            </div>
+
+            <div class="why-card">
+                <div class="count">02</div>
+                <h4>Sinematik Lokasyon</h4>
+                <p>Datça’nın en prestijli, doğayla iç içe kalmış, gün batımının gökyüzünü bir GTA VI sahnesi gibi boyadığı gizli koylarda çalışıyoruz.</p>
+            </div>
+
+            <div class="why-card">
+                <div class="count">03</div>
+                <h4>Biyomekanik Kusursuzluk</h4>
+                <p>Kas gruplarınızı yıpratmadan, eklemlerinize aşırı yük bindirmeden en yüksek hıza ulaşmanın formülünü uyguluyoruz.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Datça Yüzme | Mobile Executive Experience</p>
+        </footer>
+
+    </div> <!-- Mobile Container Bitiş -->
+
+    <!-- Sabit Alt Buton (Mobile App Style CTA) -->
+    <div class="mobile-bottom-bar">
+        <a href="mailto:datcayuzme.info@gmail.com?subject=2026%20Yaz%20Sezonu%20-%20Özel%20Yüzme%20Dersi%20Talebi&body=Merhaba,%20sitenizdeki%20executive%20programlar%20hakkında%20bilgi%20ve%20randevu%20almak%20istiyorum." class="mobile-btn">
+            KONTENJANI GÜVENCE ALTINA AL
+        </a>
+    </div>
+
+    <!-- Mobil İçin Optimize Edilmiş Zoom-In Engine -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const zoomImages = document.querySelectorAll('.zoom-img');
+            const heroBg = document.getElementById('heroBg');
+
+            // Kaydırma (Scroll) Performansı İçin Throttle Optimizasyonu
+            let isTicking = false;
+
+            window.addEventListener('scroll', () => {
+                if (!isTicking) {
+                    window.requestAnimationFrame(() => {
+                        const scrollPos = window.scrollY;
+                        
+                        // Hero arka plan paralaks (Mobilde çok hafif tutuldu)
+                        if (heroBg) {
+                            heroBg.style.transform = `scale(${1 + scrollPos * 0.0003})`;
+                        }
+
+                        // 3D Öne Çıkma Efekti
+                        const windowHeight = window.innerHeight;
+                        
+                        zoomImages.forEach(img => {
+                            const rect = img.parentElement.getBoundingClientRect();
+                            
+                            // Kutu ekranın alt kısmından girmeye başlayıp, üstten çıkana kadar
+                            if (rect.top < windowHeight && rect.bottom > 0) {
+                                img.classList.add('in-view');
+                                
+                                const totalHeight = windowHeight + rect.height;
+                                const scrolledPast = windowHeight - rect.top;
+                                const progress = Math.max(0, Math.min(1, scrolledPast / totalHeight));
+                                
+                                // Mobilde scale oranı biraz daha dar tutuldu ki taşma yapmasın
+                                const scaleValue = 0.85 + (progress * 0.20); 
+                                const opacityValue = 0.5 + (progress * 0.5);
+                                
+                                img.style.transform = `scale(${scaleValue}) translateZ(0)`;
+                                img.style.opacity = opacityValue;
+                            } else {
+                                img.classList.remove('in-view');
+                                img.style.transform = `scale(0.85) translateZ(0)`;
+                                img.style.opacity = 0.5;
+                            }
+                        });
+
+                        isTicking = false;
+                    });
+                    isTicking = true;
+                }
+            }, { passive: true }); // passive:true mobil touch-scroll performansını artırır
+        });
+    </script>
+</body>
+</html>
